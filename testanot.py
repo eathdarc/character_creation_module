@@ -1,64 +1,37 @@
-from typing import List, Tuple
+from math import sqrt
 
-# Тестовые данные.
-TEST_DATA: List[Tuple[int, str, bool]] = [
-    (44, 'success', True),
-    (16, 'failure', True),
-    (4, 'success', False),
-    (21, 'failure', False),
-]
-
-BONUS: float = 1.1
-ANTIBONUS: float = 0.8
+# Вывод приветственного сообщения.
+message = (
+    'Добро пожаловать в самую лучшую программу для вычисления '
+    'квадратного корня из заданного числа'
+)
+print(message)
 
 
-def add_rep(current_rep: float, rep_points: int, buf_effect: bool) -> float:
+def calculate_square_root(number: float) -> float:
     """
-    Увеличивает репутацию персонажа.
+    Вычисляет квадратный корень из заданного числа.
 
-    :param current_rep: Текущая репутация.
-    :param rep_points: Очки репутации для добавления.
-    :param buf_effect: Флаг, указывающий на наличие буфера
-    :return: Новое значение репутации с учетом эффекта.
+    :param number: Число, из которого вычисляется квадратный корень.
+    :return: Квадратный корень числа.
     """
-    current_rep += rep_points
-    if buf_effect:
-        return current_rep * BONUS
-    return current_rep
+    return sqrt(number)
 
 
-def remove_rep(current_rep: float, rep_points: int,
-               debuf_effect: bool) -> float:
+def calc(your_number: float) -> None:
     """
-    Уменьшает репутацию персонажа.
+    Проверяет корректность числа и выводит его квадратный корень.
 
-    :param current_rep: Текущая репутация.
-    :param rep_points: Очки репутации для вычитания.
-    :param debuf_effect: Флаг, указывающий на наличие дебаффа
-    :return: Новое значение репутации с учетом эффекта.
+    :param your_number: Число, для которого нужно вычислить квадратный корень.
     """
-    current_rep -= rep_points
-    if debuf_effect:
-        return current_rep * ANTIBONUS
-    return current_rep
+    if your_number <= 0:
+        print('Ошибка: число должно быть больше нуля.')
+        return
+
+    root = calculate_square_root(your_number)
+    print(f'Мы вычислили квадратный корень из введённого вами числа.'
+          f' Это будет: {root:.2f}')
 
 
-def main(duel_res: List[Tuple[int, str, bool]]) -> str:
-    """
-    Основная функция для подсчета репутации персонажа.
-
-    :param duel_res: Список кортежей с данными поединков
-    :return: Строка с итоговым сообщением о репутации персонажа.
-    """
-    current_rep: float = 0.0
-    for rep, result, effect in duel_res:
-        if result == 'success':
-            current_rep = add_rep(current_rep, rep, effect)
-        elif result == 'failure':
-            current_rep = remove_rep(current_rep, rep, effect)
-    return (f'После {len(duel_res)} поединков, '
-            f'репутация персонажа — {current_rep:.3f} очков.')
-
-
-# Тестовый вызов функции main.
-print(main(TEST_DATA))
+# Тестовый вызов функции calc.
+calc(25.5)
